@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { push } from './navActions'
+import { pop, push } from './navActions'
 
 const styles = {
   container: {
@@ -11,20 +11,19 @@ const styles = {
   },
 }
 
-const Home = ({ push }) => {
-  return (
-    <View style={styles.container}>
-      <Text>Hello from Home</Text>
-      <Text onPress={() => push({ key: 'About' })}>Go To About</Text>
-      <Text onPress={() => push({ key: 'About', type: 'modal' })}>Go To About With Modal</Text>
-    </View> 
-  )
-}
+const Contact = ({ pop, push }) => (
+  <View style={styles.container}>
+    <Text>Hello from Contact</Text>
+    <Text onPress={() => pop()}>Back</Text>
+    <Text onPress={() => push({ key: 'About' })}>About</Text>
+  </View> 
+)
 
 function mapStateToProps () { return {} }
 
 function mapDispatchToProps (dispatch) {
   return {
+    pop: () => dispatch(pop()),
     push: (route) => dispatch(push(route))
   }
 }
@@ -32,4 +31,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home)
+)(Contact)

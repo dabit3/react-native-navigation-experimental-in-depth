@@ -14,7 +14,14 @@ function navReducer(state, action, route) {
   }
   switch (action.type) {
     case PUSH_ROUTE: {
-      return NavigationStateUtils.push(state, action.route)
+      const routes = state.routes.slice();
+      routes.push(action.route);
+      return {
+        ...state,
+        prevPushedRoute: action.route,
+        index: routes.length - 1,
+        routes,
+      }
     }
     case POP_ROUTE: {
       return NavigationStateUtils.pop(state)

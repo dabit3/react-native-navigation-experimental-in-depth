@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { View, Text, NavigationExperimental } from 'react-native'
 import Home from './Home'
 import About from './About'
+import Contact from './Contact'
 
 const {
   CardStack: NavigationCardStack,
@@ -36,12 +37,13 @@ class Header extends Component {
 
 class NavigationCardStackExample extends Component {
   _renderScene = (props) => {
-    console.log('props:', props)
     switch(props.scene.route.key) {
       case 'Home':
         return <Home />
       case 'About':
         return <About />
+      case 'Contact':
+        return <Contact />
     }
   }
   _renderHeader = (sceneProps) => {
@@ -53,9 +55,14 @@ class NavigationCardStackExample extends Component {
     );
   }
   render() {
-    console.log('props', this.props)
+    const { navState } = this.props
+    let direction = 'horizontal'
+    if (navState.prevPushedRoute && navState.prevPushedRoute.type === 'modal') {
+      direction = 'vertical'
+    }
     return (
       <NavigationCardStack
+        direction={direction}
         renderHeader={this._renderHeader}
         navigationState={this.props.navState}
         renderScene={this._renderScene} 
